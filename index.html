@@ -1,439 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raiser's Dance Studio - Where Passion Rises</title>
-    <meta name="description" content="Raiser's Dance Studio offers Bollywood, Hip-hop, Contemporary, and Semi-classical dance classes for kids, teens, and adults. Join us to rise as a dancer!">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="Raiser's Dance Studio offers Bollywood, Hip-hop, Contemporary, and Semi-classical dance classes for kids, teens, and adults. Join us to rise as a dancer!"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
     <!-- Added Font Awesome for social media icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <span class="logo-text">Raiser's Dance <span class="studio-text">Studio</span></span>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#classes" class="nav-link">Classes</a></li>
-                <li><a href="#styles" class="nav-link">Dance Styles</a></li>
-                <li><a href="#programs" class="nav-link">Programs</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+      <div class="container nav-container">
+        <div class="logo">
+          <span class="logo-text"
+            >Raiser's Dance <span class="studio-text">Studio</span></span
+          >
         </div>
+        <button
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#classes" class="nav-link">Classes</a></li>
+          <li><a href="#styles" class="nav-link">Dance Styles</a></li>
+          <li><a href="#programs" class="nav-link">Programs</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#studio-rent" class="nav-link">Rent Our Studio</a></li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">We Rise Dancers</div>
-            <h1 class="hero-title">A Place to Learn, <br><span class="highlight">Grow & Express</span><br> Through Dance</h1>
-            <p class="hero-subtitle">Where passion rises, confidence grows, and talent transforms into excellence</p>
-            <div class="hero-buttons">
-                <a href="#classes" class="btn btn-primary">Explore Classes</a>
-                <a href="#contact" class="btn btn-secondary">Get Started</a>
-            </div>
+      <div class="hero-content">
+        <div class="hero-badge">We Rise Dancers</div>
+        <h1 class="hero-title">
+          A Place to Learn, <br /><span class="highlight">Grow & Express</span
+          ><br />
+          Through Dance
+        </h1>
+        <p class="hero-subtitle">
+          Where passion rises, confidence grows, and talent transforms into
+          excellence
+        </p>
+        <div class="hero-buttons">
+          <a href="#classes" class="btn btn-primary">Explore Classes</a>
+          <a href="#contact" class="btn btn-secondary">Get Started</a>
         </div>
-        <div class="hero-image">
-            <!-- Added dynamic dancer image for hero section -->
-            <img src="./utils//HeaderLogo.png" alt="Dancer in motion">
-        </div>
+      </div>
+      <div class="hero-image">
+        <!-- Added dynamic dancer image for hero section -->
+        <img src="./utils//HeaderLogo.png" alt="Dancer in motion" />
+      </div>
     </section>
 
     <!-- About Section -->
     <section class="about" id="about">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">About Us</span>
-                <h2 class="section-title">Our Passion for Dance</h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="about-icon">🎭</div>
-                    <h3>Our Vision</h3>
-                    <p>Raiser's Dance Studio is more than just a place to learn dance—it's a space where passion rises, confidence grows, and talent is transformed into excellence.</p>
-                </div>
-                <div class="about-card">
-                    <div class="about-icon">💫</div>
-                    <h3>Our Mission</h3>
-                    <p>We strive to inspire our students to dream big, work hard, and rise stronger—on stage and in life. Dance is our universal language.</p>
-                </div>
-                <div class="about-card">
-                    <div class="about-icon">❤️</div>
-                    <h3>Our Values</h3>
-                    <p>Every beat we count, every move we teach is driven by love for the art. We nurture creativity, discipline, and self-expression.</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">About Us</span>
+          <h2 class="section-title">Our Passion for Dance</h2>
         </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🎭</div>
+            <h3>Our Vision</h3>
+            <p>
+              Raiser's Dance Studio is more than just a place to learn
+              dance—it's a space where passion rises, confidence grows, and
+              talent is transformed into excellence.
+            </p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">💫</div>
+            <h3>Our Mission</h3>
+            <p>
+              We strive to inspire our students to dream big, work hard, and
+              rise stronger—on stage and in life. Dance is our universal
+              language.
+            </p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">❤️</div>
+            <h3>Our Values</h3>
+            <p>
+              Every beat we count, every move we teach is driven by love for the
+              art. We nurture creativity, discipline, and self-expression.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Classes Schedule Section -->
     <section class="classes" id="classes">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Schedule</span>
-                <h2 class="section-title">Our Classes</h2>
-                <p class="section-subtitle">Monday to Friday | Evening Sessions</p>
-            </div>
-            <div class="classes-grid">
-                <div class="class-card" data-class="bollywood">
-                    <div class="class-time">5:00 PM - 6:00 PM</div>
-                    <h3 class="class-name">Bollywood Class</h3>
-                    <p class="class-description">Energetic, expressive, and fun-filled, inspired by the latest and classic Bollywood songs. Focus on rhythm, expressions, confidence, and performance skills.</p>
-                    <div class="class-features">
-                        <span class="feature-tag">All Ages</span>
-                        <span class="feature-tag">Expressions</span>
-                        <span class="feature-tag">Performance</span>
-                    </div>
-                    <div class="click-indicator">Click for details →</div>
-                </div>
-                <div class="class-card" data-class="kids">
-                    <div class="class-time">6:00 PM - 7:00 PM</div>
-                    <h3 class="class-name">Special Kids Class</h3>
-                    <p class="class-description">Designed to nurture young talent in a fun, safe, and supportive environment. Building confidence, coordination, creativity, and discipline.</p>
-                    <div class="class-features">
-                        <span class="feature-tag">Kids</span>
-                        <span class="feature-tag">Safe Space</span>
-                        <span class="feature-tag">Creative Fun</span>
-                    </div>
-                    <div class="click-indicator">Click for details →</div>
-                </div>
-                <div class="class-card" data-class="beginner">
-                    <div class="class-time">7:00 PM - 8:00 PM</div>
-                    <h3 class="class-name">Beginner Class</h3>
-                    <p class="class-description">For students who are new to dance or want to build strong basics. No prior dance experience required—just passion and willingness to learn.</p>
-                    <div class="class-features">
-                        <span class="feature-tag">No Experience</span>
-                        <span class="feature-tag">Basics</span>
-                        <span class="feature-tag">Foundation</span>
-                    </div>
-                    <div class="click-indicator">Click for details →</div>
-                </div>
-                <div class="class-card" data-class="advanced">
-                    <div class="class-time">8:00 PM - 9:00 PM</div>
-                    <h3 class="class-name">Advanced Class</h3>
-                    <p class="class-description">Contemporary Dance focusing on emotion, storytelling, fluidity, and freedom. For experienced dancers ready for advanced techniques.</p>
-                    <div class="class-features">
-                        <span class="feature-tag">Advanced</span>
-                        <span class="feature-tag">Contemporary</span>
-                        <span class="feature-tag">Expressive</span>
-                    </div>
-                    <div class="click-indicator">Click for details →</div>
-                </div>
-            </div>
-            
-            <div class="detail-cards-panel" id="detailPanel">
-                <div class="detail-panel-header">
-                    <h3>Class Details</h3>
-                    <button class="close-panel" id="closePanel">&times;</button>
-                </div>
-                <div class="detail-cards-container" id="detailCardsContainer">
-                    <!-- Detail cards will be dynamically inserted here -->
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Schedule</span>
+          <h2 class="section-title">Our Classes</h2>
+          <p class="section-subtitle">Monday to Friday | Evening Sessions</p>
         </div>
+        <div class="classes-grid">
+          <div class="class-card" data-class="bollywood">
+            <div class="class-time">5:00 PM - 6:00 PM</div>
+            <h3 class="class-name">Bollywood Class</h3>
+            <p class="class-description">
+              Energetic, expressive, and fun-filled, inspired by the latest and
+              classic Bollywood songs. Focus on rhythm, expressions, confidence,
+              and performance skills.
+            </p>
+            <div class="class-features">
+              <span class="feature-tag">All Ages</span>
+              <span class="feature-tag">Expressions</span>
+              <span class="feature-tag">Performance</span>
+            </div>
+            <div class="click-indicator">Click for details →</div>
+          </div>
+          <div class="class-card" data-class="kids">
+            <div class="class-time">6:00 PM - 7:00 PM</div>
+            <h3 class="class-name">Special Kids Class</h3>
+            <p class="class-description">
+              Designed to nurture young talent in a fun, safe, and supportive
+              environment. Building confidence, coordination, creativity, and
+              discipline.
+            </p>
+            <div class="class-features">
+              <span class="feature-tag">Kids</span>
+              <span class="feature-tag">Safe Space</span>
+              <span class="feature-tag">Creative Fun</span>
+            </div>
+            <div class="click-indicator">Click for details →</div>
+          </div>
+          <div class="class-card" data-class="beginner">
+            <div class="class-time">7:00 PM - 8:00 PM</div>
+            <h3 class="class-name">Beginner Class</h3>
+            <p class="class-description">
+              For students who are new to dance or want to build strong basics.
+              No prior dance experience required—just passion and willingness to
+              learn.
+            </p>
+            <div class="class-features">
+              <span class="feature-tag">No Experience</span>
+              <span class="feature-tag">Basics</span>
+              <span class="feature-tag">Foundation</span>
+            </div>
+            <div class="click-indicator">Click for details →</div>
+          </div>
+          <div class="class-card" data-class="advanced">
+            <div class="class-time">8:00 PM - 9:00 PM</div>
+            <h3 class="class-name">Advanced Class</h3>
+            <p class="class-description">
+              Contemporary Dance focusing on emotion, storytelling, fluidity,
+              and freedom. For experienced dancers ready for advanced
+              techniques.
+            </p>
+            <div class="class-features">
+              <span class="feature-tag">Advanced</span>
+              <span class="feature-tag">Contemporary</span>
+              <span class="feature-tag">Expressive</span>
+            </div>
+            <div class="click-indicator">Click for details →</div>
+          </div>
+        </div>
+
+        <div class="detail-cards-panel" id="detailPanel">
+          <div class="detail-panel-header">
+            <h3>Class Details</h3>
+            <button class="close-panel" id="closePanel">&times;</button>
+          </div>
+          <div class="detail-cards-container" id="detailCardsContainer">
+            <!-- Detail cards will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Skill Levels Section -->
     <section class="skill-levels">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Your Journey</span>
-                <h2 class="section-title">Skill Levels</h2>
-                <p class="section-subtitle">Every dancer can rise with the right guidance, practice, and passion</p>
-            </div>
-            <div class="levels-container">
-                <div class="level-card">
-                    <div class="level-number">01</div>
-                    <h3 class="level-title">Beginner</h3>
-                    <p class="level-description">Perfect for students who are new to dance</p>
-                    <ul class="level-features">
-                        <li>Basic body movements and coordination</li>
-                        <li>Rhythm, timing, and musicality</li>
-                        <li>Simple choreography</li>
-                        <li>Introduction to dance discipline</li>
-                    </ul>
-                </div>
-                <div class="level-card highlighted">
-                    <div class="level-number">02</div>
-                    <h3 class="level-title">Intermediate</h3>
-                    <p class="level-description">For dancers with basic knowledge and training experience</p>
-                    <ul class="level-features">
-                        <li>Improved technique and movement control</li>
-                        <li>Complex choreography and formations</li>
-                        <li>Strength, flexibility, and expressions</li>
-                        <li>Performance skills and stage presence</li>
-                    </ul>
-                </div>
-                <div class="level-card">
-                    <div class="level-number">03</div>
-                    <h3 class="level-title">Advanced</h3>
-                    <p class="level-description">Designed for experienced and dedicated dancers</p>
-                    <ul class="level-features">
-                        <li>Advanced techniques and precision</li>
-                        <li>Freestyle, creativity, and personal style</li>
-                        <li>High-energy choreography</li>
-                        <li>Competition and professional training</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Your Journey</span>
+          <h2 class="section-title">Skill Levels</h2>
+          <p class="section-subtitle">
+            Every dancer can rise with the right guidance, practice, and passion
+          </p>
         </div>
+        <div class="levels-container">
+          <div class="level-card">
+            <div class="level-number">01</div>
+            <h3 class="level-title">Beginner</h3>
+            <p class="level-description">
+              Perfect for students who are new to dance
+            </p>
+            <ul class="level-features">
+              <li>Basic body movements and coordination</li>
+              <li>Rhythm, timing, and musicality</li>
+              <li>Simple choreography</li>
+              <li>Introduction to dance discipline</li>
+            </ul>
+          </div>
+          <div class="level-card highlighted">
+            <div class="level-number">02</div>
+            <h3 class="level-title">Intermediate</h3>
+            <p class="level-description">
+              For dancers with basic knowledge and training experience
+            </p>
+            <ul class="level-features">
+              <li>Improved technique and movement control</li>
+              <li>Complex choreography and formations</li>
+              <li>Strength, flexibility, and expressions</li>
+              <li>Performance skills and stage presence</li>
+            </ul>
+          </div>
+          <div class="level-card">
+            <div class="level-number">03</div>
+            <h3 class="level-title">Advanced</h3>
+            <p class="level-description">
+              Designed for experienced and dedicated dancers
+            </p>
+            <ul class="level-features">
+              <li>Advanced techniques and precision</li>
+              <li>Freestyle, creativity, and personal style</li>
+              <li>High-energy choreography</li>
+              <li>Competition and professional training</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Dance Styles Section -->
     <section class="dance-styles" id="styles">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">What We Teach</span>
-                <h2 class="section-title">Dance Styles</h2>
-            </div>
-            <div class="styles-grid">
-                <div class="style-card">
-                    <div class="style-image">
-                        <img src="./utils/BollywoodDance.jpg" alt="Bollywood Dance">
-                    </div>
-                    <div class="style-content">
-                        <h3>Bollywood Dance</h3>
-                        <p>A vibrant and energetic dance style inspired by Indian cinema. A beautiful fusion of classical Indian dance forms, folk styles, and modern influences like hip-hop and contemporary.</p>
-                    </div>
-                </div>
-                <div class="style-card">
-                    <div class="style-image">
-                        <img src="./utils/HipHopDance.jpg" alt="Hip-Hop Dance">
-                    </div>
-                    <div class="style-content">
-                        <h3>Hip-Hop Dance</h3>
-                        <p>A powerful, high-energy street dance style known for its freedom, attitude, rhythm, and self-expression. Express your personality, confidence, and creativity through strong movements.</p>
-                    </div>
-                </div>
-                <div class="style-card">
-                    <div class="style-image">
-                        <img src="./utils/SemiClassical.jpg" alt="Semi-Classical Dance">
-                    </div>
-                    <div class="style-content">
-                        <h3>Semi-Classical</h3>
-                        <p>A graceful fusion of traditional Indian classical dance forms and modern expressions. Combines beauty, discipline, and storytelling of classical dance with contemporary flow.</p>
-                    </div>
-                </div>
-                <div class="style-card">
-                    <div class="style-image">
-                        <img src="./utils/Contempary.jpg" alt="Contemporary Dance">
-                    </div>
-                    <div class="style-content">
-                        <h3>Contemporary</h3>
-                        <p>A powerful and expressive dance style that blends classical, modern, and lyrical movement. Focuses on emotion, storytelling, fluidity, and freedom of expression.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">What We Teach</span>
+          <h2 class="section-title">Dance Styles</h2>
         </div>
+        <div class="styles-grid">
+          <div class="style-card">
+            <div class="style-image">
+              <img src="./utils/BollywoodDance.jpg" alt="Bollywood Dance" />
+            </div>
+            <div class="style-content">
+              <h3>Bollywood Dance</h3>
+              <p>
+                A vibrant and energetic dance style inspired by Indian cinema. A
+                beautiful fusion of classical Indian dance forms, folk styles,
+                and modern influences like hip-hop and contemporary.
+              </p>
+            </div>
+          </div>
+          <div class="style-card">
+            <div class="style-image">
+              <img src="./utils/HipHopDance.jpg" alt="Hip-Hop Dance" />
+            </div>
+            <div class="style-content">
+              <h3>Hip-Hop Dance</h3>
+              <p>
+                A powerful, high-energy street dance style known for its
+                freedom, attitude, rhythm, and self-expression. Express your
+                personality, confidence, and creativity through strong
+                movements.
+              </p>
+            </div>
+          </div>
+          <div class="style-card">
+            <div class="style-image">
+              <img src="./utils/SemiClassical.jpg" alt="Semi-Classical Dance" />
+            </div>
+            <div class="style-content">
+              <h3>Semi-Classical</h3>
+              <p>
+                A graceful fusion of traditional Indian classical dance forms
+                and modern expressions. Combines beauty, discipline, and
+                storytelling of classical dance with contemporary flow.
+              </p>
+            </div>
+          </div>
+          <div class="style-card">
+            <div class="style-image">
+              <img src="./utils/Contempary.jpg" alt="Contemporary Dance" />
+            </div>
+            <div class="style-content">
+              <h3>Contemporary</h3>
+              <p>
+                A powerful and expressive dance style that blends classical,
+                modern, and lyrical movement. Focuses on emotion, storytelling,
+                fluidity, and freedom of expression.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Programs Section -->
     <section class="programs" id="programs">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">For Everyone</span>
-                <h2 class="section-title">Our Programs</h2>
-            </div>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon">
-                        <img src="./utils//KidsProgram.jpg" alt="Kids Program">
-                    </div>
-                    <h3>Kids Program</h3>
-                    <div class="program-features">
-                        <div class="program-feature">
-                            <strong>Creative Fun</strong>
-                            <p>We create memories, friendships, and confidence that last a lifetime. From Bollywood beats to hip-hop heat!</p>
-                        </div>
-                        <div class="program-feature">
-                            <strong>Safe Space</strong>
-                            <p>A fun, positive, and caring environment. Every little dancer deserves to feel safe, happy, and free!</p>
-                        </div>
-                        <div class="program-feature">
-                            <strong>Easy Steps</strong>
-                            <p>We teach easy steps that make dancing fun for everyone!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">
-                        <img src="./utils/TeenClasses.jpg" alt="Teen Classes">
-                    </div>
-                    <h3>Teen Classes</h3>
-                    <p>Designed to channel energy, creativity, and confidence into powerful movement. Teens build strong dance foundations while expressing their individuality and style.</p>
-                    <p>With a perfect balance of technique, fitness, and performance, we train teens to grow as confident dancers both on and off the stage.</p>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon">
-                        <img src="./utils/AdultDance.jpg" alt="Adult Dance">
-                    </div>
-                    <h3>Adult Dance</h3>
-                    <p>For anyone who loves dance—whether you're a beginner, returning after a break, or looking to stay fit in a fun way. Age is never a barrier when passion leads the way.</p>
-                    <p>Focus on fitness, confidence, stress relief, and self-expression in a positive and energetic environment.</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">For Everyone</span>
+          <h2 class="section-title">Our Programs</h2>
         </div>
+        <div class="programs-grid">
+          <div class="program-card">
+            <div class="program-icon">
+              <img src="./utils//KidsProgram.jpg" alt="Kids Program" />
+            </div>
+            <h3>Kids Program</h3>
+            <div class="program-features">
+              <div class="program-feature">
+                <strong>Creative Fun</strong>
+                <p>
+                  We create memories, friendships, and confidence that last a
+                  lifetime. From Bollywood beats to hip-hop heat!
+                </p>
+              </div>
+              <div class="program-feature">
+                <strong>Safe Space</strong>
+                <p>
+                  A fun, positive, and caring environment. Every little dancer
+                  deserves to feel safe, happy, and free!
+                </p>
+              </div>
+              <div class="program-feature">
+                <strong>Easy Steps</strong>
+                <p>We teach easy steps that make dancing fun for everyone!</p>
+              </div>
+            </div>
+          </div>
+          <div class="program-card">
+            <div class="program-icon">
+              <img src="./utils/TeenClasses.jpg" alt="Teen Classes" />
+            </div>
+            <h3>Teen Classes</h3>
+            <p>
+              Designed to channel energy, creativity, and confidence into
+              powerful movement. Teens build strong dance foundations while
+              expressing their individuality and style.
+            </p>
+            <p>
+              With a perfect balance of technique, fitness, and performance, we
+              train teens to grow as confident dancers both on and off the
+              stage.
+            </p>
+          </div>
+          <div class="program-card">
+            <div class="program-icon">
+              <img src="./utils/AdultDance.jpg" alt="Adult Dance" />
+            </div>
+            <h3>Adult Dance</h3>
+            <p>
+              For anyone who loves dance—whether you're a beginner, returning
+              after a break, or looking to stay fit in a fun way. Age is never a
+              barrier when passion leads the way.
+            </p>
+            <p>
+              Focus on fitness, confidence, stress relief, and self-expression
+              in a positive and energetic environment.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Special Programs Section -->
     <section class="special-programs">
-        <div class="container">
-            <div class="special-grid">
-                <div class="special-card">
-                    <h3>Competition Team</h3>
-                    <div class="special-content">
-                        <div class="special-item">
-                            <h4>Team Spirit</h4>
-                            <p>Team spirit is the heart of everything we do. Great performances are created when dancers support, respect, and grow together as one team.</p>
-                        </div>
-                        <div class="special-item">
-                            <h4>Show Skills</h4>
-                            <p>Our studio culture encourages unity, discipline, motivation, and mutual respect. Every dancer is valued, every effort is appreciated.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="special-card">
-                    <h3>Private Lessons</h3>
-                    <p>Our Private Dance Training is designed for individuals who want personalized attention, faster improvement, and customized learning.</p>
-                    <p>Whether you are preparing for a competition, performance, audition, or personal skill development, our private training offers focused guidance and dedicated mentoring.</p>
-                    <ul class="private-features">
-                        <li>One-on-one or small-group sessions</li>
-                        <li>Customized to your goals and pace</li>
-                        <li>Competition and audition preparation</li>
-                        <li>Focused guidance from expert instructors</li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="special-grid">
+          <div class="special-card">
+            <h3>Competition Team</h3>
+            <div class="special-content">
+              <div class="special-item">
+                <h4>Team Spirit</h4>
+                <p>
+                  Team spirit is the heart of everything we do. Great
+                  performances are created when dancers support, respect, and
+                  grow together as one team.
+                </p>
+              </div>
+              <div class="special-item">
+                <h4>Show Skills</h4>
+                <p>
+                  Our studio culture encourages unity, discipline, motivation,
+                  and mutual respect. Every dancer is valued, every effort is
+                  appreciated.
+                </p>
+              </div>
             </div>
+          </div>
+          <div class="special-card">
+            <h3>Private Lessons</h3>
+            <p>
+              Our Private Dance Training is designed for individuals who want
+              personalized attention, faster improvement, and customized
+              learning.
+            </p>
+            <p>
+              Whether you are preparing for a competition, performance,
+              audition, or personal skill development, our private training
+              offers focused guidance and dedicated mentoring.
+            </p>
+            <ul class="private-features">
+              <li>One-on-one or small-group sessions</li>
+              <li>Customized to your goals and pace</li>
+              <li>Competition and audition preparation</li>
+              <li>Focused guidance from expert instructors</li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Studio Rent Section -->
+
+    <section class="studio-rent" id="studio-rent">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Business Opportunity</span>
+
+          <h2 class="section-title">Rent Our Studio</h2>
+
+          <p class="section-subtitle">
+            “Rent Our Studio. Record Your Story , Your Voice. Our Studio. Where
+            Ideas Turn Into Audio , A Studio Built for Creators Professional
+            Space for Powerful Voices.”
+          </p>
+        </div>
+
+        <div class="rent-features">
+          <div class="rent-feature">
+            <span class="feature-icon">🪞</span>
+
+            <p>Full-Length Mirrors</p>
+          </div>
+
+          <div class="rent-feature">
+            <span class="feature-icon">💡</span>
+
+            <p>Professional Lighting</p>
+          </div>
+
+          <div class="rent-feature">
+            <span class="feature-icon">🔊</span>
+
+            <p>Sound System</p>
+          </div>
+
+          <div class="rent-feature">
+            <span class="feature-icon">❄️</span>
+
+            <p>Air Conditioning</p>
+          </div>
+
+          <div class="rent-feature">
+            <span class="feature-icon">🅿️</span>
+
+            <p>Parking Available</p>
+          </div>
+
+          <div class="rent-feature">
+            <span class="feature-icon">📱</span>
+
+            <p>WiFi Access</p>
+          </div>
+        </div>
+
+        <div class="pricing-section">
+          <h3 class="pricing-title">Flexible Pricing Plans</h3>
+
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-duration">1 Hour</div>
+              <div class="pricing-amount">&#128176;</div>
+              <p class="pricing-desc">
+                Perfect for quick rehearsals and practice sessions
+              </p>
+              <a href="tel:9503399763" class="btn btn-primary">Book Now</a>
+            </div>
+
+            <div class="pricing-card">
+              <div class="pricing-duration">Half Day (4 Hours)</div>
+
+              <div class="pricing-amount">&#128176; &#128176;</div>
+
+              <p class="pricing-desc">
+                Ideal for workshops and group training sessions
+              </p>
+
+              <a href="tel:9503399763" class="btn btn-primary">Book Now</a>
+            </div>
+
+            <div class="pricing-card featured">
+              <div class="pricing-badge">Best Value</div>
+              <div class="pricing-duration">Full Day (8 Hours)</div>
+
+              <div class="pricing-amount">&#128176; &#128176; &#128176;</div>
+
+              <p class="pricing-desc">
+                Best for events, productions, and full-day programs
+              </p>
+
+              <a href="tel:9503399763" class="btn btn-for-featuredOne">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-cta">
+          <p class="booking-cta-text">Ready to book our studio for your next event?</p>
+
+          <a href="#contact" class="btn btn-primary">Book Studio</a>
+        </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h2>Get in Touch</h2>
-                    <p class="contact-subtitle">Ready to start your dance journey? We'd love to hear from you!</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">📧</div>
-                            <div>
-                                <h4>Email</h4>
-                                <a href="mailto:Raisersdancestudio@gmail.com">Raisersdancestudio@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📱</div>
-                            <div>
-                                <h4>Phone</h4>
-                                <a href="tel:9503399763">9503399763</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">⏰</div>
-                            <div>
-                                <h4>Schedule</h4>
-                                <p>Monday - Friday<br>5:00 PM - 9:00 PM</p>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p class="contact-subtitle">
+              Ready to start your dance journey? We'd love to hear from you!
+            </p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div>
+                  <h4>Email</h4>
+                  <a href="mailto:Raisersdancestudio@gmail.com"
+                    >Raisersdancestudio@gmail.com</a
+                  >
                 </div>
-                <div class="contact-form-container">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" placeholder="Your Phone Number">
-                        </div>
-                        <div class="form-group">
-                            <select id="interest" name="interest" required>
-                                <option value="">Select Class Interest</option>
-                                <option value="bollywood">Bollywood Class</option>
-                                <option value="kids">Special Kids Class</option>
-                                <option value="beginner">Beginner Class</option>
-                                <option value="advanced">Advanced Class</option>
-                                <option value="private">Private Lessons</option>
-                                <option value="competition">Competition Team</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="4" placeholder="Your Message"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                    </form>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div>
+                  <h4>Phone</h4>
+                  <a href="tel:9503399763">9503399763</a>
                 </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">⏰</div>
+                <div>
+                  <h4>Schedule</h4>
+                  <p>Monday - Sunday<br />9:00 AM - 9:00 PM</p>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="contact-form-container">
+            <form class="contact-form" id="contactForm">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Your Phone Number"
+                />
+              </div>
+              <div class="form-group">
+                <select id="interest" name="interest" required>
+                  <option value="">Select Class Interest</option>
+                  <option value="bollywood">Bollywood Class</option>
+                  <option value="kids">Special Kids Class</option>
+                  <option value="beginner">Beginner Class</option>
+                  <option value="advanced">Advanced Class</option>
+                  <option value="private">Private Lessons</option>
+                  <option value="competition">Competition Team</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Your Message"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <span class="studio-text">Raiser's Dance <span class="studio-text">Studio</span></span>
-                    </div>
-                    <p>Where passion rises, confidence grows, and talent transforms into excellence.</p>
-                    <!-- Added social media icons section -->
-                    <div class="social-icons">
-                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/raisersdancestudio/" target="_blank" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@raisersdancestudio" target="_blank" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#classes">Classes</a></li>
-                        <li><a href="#programs">Programs</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p>Raisersdancestudio@gmail.com</p>
-                    <p>9503399763</p>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">
+              <span class="studio-text"
+                >Raiser's Dance <span class="studio-text">Studio</span></span
+              >
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Raiser's Dance Studio. All rights reserved. We Rise Dancers.</p>
+            <p>
+              Where passion rises, confidence grows, and talent transforms into
+              excellence.
+            </p>
+            <!-- Added social media icons section -->
+            <div class="social-icons">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                aria-label="Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/raisersdancestudio/"
+                target="_blank"
+                aria-label="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://www.youtube.com/@raisersdancestudio"
+                target="_blank"
+                aria-label="YouTube"
+              >
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                aria-label="Twitter"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i>
+              </a>
             </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#classes">Classes</a></li>
+              <li><a href="#programs">Programs</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact</h4>
+            <p>Raisersdancestudio@gmail.com</p>
+            <p>9503399763</p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 Raiser's Dance Studio. All rights reserved. We Rise
+            Dancers.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="./script.js"></script>
     <script src="./slide-animation.js"></script>
-</body>
+  </body>
 </html>
