@@ -16,29 +16,56 @@ navLinks.forEach((link) => {
   });
 });
 
-// Navbar scroll effect
+// Navbar scroll and Scroll Spy effect
 const navbar = document.getElementById("navbar");
-let lastScroll = 0;
+const sections = document.querySelectorAll("section[id]");
+let isScrolling = false;
 
-window.addEventListener("scroll", () => {
-  const currentScroll = window.pageYOffset;
+function updateNavigation() {
+  const scrollY = window.pageYOffset;
 
-  if (currentScroll > 100) {
+  // Navbar background threshold
+  if (scrollY > 50) {
     navbar.classList.add("scrolled");
   } else {
     navbar.classList.remove("scrolled");
   }
 
-  lastScroll = currentScroll;
+  // Scroll Spy logic
+  sections.forEach((current) => {
+    const sectionHeight = current.offsetHeight;
+    const sectionTop = current.offsetTop - 100; // Adjusted for navbar height
+    const sectionId = current.getAttribute("id");
+
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      document
+        .querySelector(`.nav-menu a[href*=${sectionId}]`)
+        ?.classList.add("active");
+    } else {
+      document
+        .querySelector(`.nav-menu a[href*=${sectionId}]`)
+        ?.classList.remove("active");
+    }
+  });
+
+  isScrolling = false;
+}
+
+window.addEventListener("scroll", () => {
+  if (!isScrolling) {
+    window.requestAnimationFrame(updateNavigation);
+    isScrolling = true;
+  }
 });
 
 // Smooth scroll for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
+    const targetId = this.getAttribute("href");
+    const target = document.querySelector(targetId);
     if (target) {
-      const offset = 80; // Navbar height
+      const offset = 70; // Improved navbar offset
       const targetPosition = target.offsetTop - offset;
       window.scrollTo({
         top: targetPosition,
@@ -51,25 +78,52 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 // Contact Form Handling
 const contactForm = document.getElementById("contactForm");
 
-contactForm.addEventListener("submit", (e) => {
+contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Get form data
-  const formData = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value,
-    interest: document.getElementById("interest").value,
-    message: document.getElementById("message").value,
-  };
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.innerText;
 
-  console.log("[v0] Form submitted:", formData);
+  // Show loading state
+  submitBtn.innerText = "Sending...";
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = "0.7";
 
-  // Show success message
-  alert("Thank you for your interest! We will get back to you soon.");
+  // Create FormData object (automatically grabs all named inputs)
+  const formData = new FormData(contactForm);
+  const data = Object.fromEntries(formData.entries());
 
-  // Reset form
-  contactForm.reset();
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (response.status === 200) {
+      // Success
+      alert("Thank you! Your message has been sent successfully.");
+      contactForm.reset();
+    } else {
+      // API returned an error
+      console.error(result);
+      alert("Something went wrong. Please try again later.");
+    }
+  } catch (error) {
+    // Network error
+    console.error(error);
+    alert("Network error. Please check your internet connection.");
+  } finally {
+    // Reset button state
+    submitBtn.innerText = originalBtnText;
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+  }
 });
 
 // Intersection Observer for animations
@@ -81,21 +135,17 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      entry.target.style.opacity = "1";
-      entry.target.style.transform = "translateY(0)";
+      entry.target.classList.add("reveal-active");
     }
   });
 }, observerOptions);
 
-// Observe elements for fade-in animations
+// Observe elements for reveal animations
 document
   .querySelectorAll(
-    ".about-card, .class-card, .level-card, .style-card, .program-card"
+    ".about-card, .class-card, .level-card, .style-card, .program-card, .special-card, .section-header, .pricing-section, .contact-info"
   )
   .forEach((el) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
     observer.observe(el);
   });
 
@@ -119,6 +169,55 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+
+// Reusable Slider Function
+function initSlider(sliderId, dotsId, totalSlides) {
+  const slider = document.getElementById(sliderId);
+  const dots = document.querySelectorAll(`#${dotsId} .dot`);
+  let currentSlide = 0;
+  let slideInterval;
+
+  function updateSlider() {
+    const isMobile =
+      window.innerWidth < (sliderId === "classesSlider" ? 1024 : 768);
+    if (isMobile) {
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+      });
+    } else {
+      slider.style.transform = "none";
+    }
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+  }
+
+  function startSlider() {
+    if (slideInterval) clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      currentSlide = parseInt(dot.getAttribute("data-index"));
+      updateSlider();
+      startSlider();
+    });
+  });
+
+  window.addEventListener("resize", updateSlider);
+  startSlider();
+  updateSlider();
+}
+
+// Initialize Sliders
+initSlider("aboutSlider", "sliderDots", 3);
+initSlider("classesSlider", "classesDots", 4);
+initSlider("stylesSlider", "stylesDots", 4);
+initSlider("programsSlider", "programsDots", 3);
 
 const levelCards = document.querySelectorAll(".level-card");
 
@@ -191,32 +290,67 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Gallery Filtering Logic
+// Gallery Filtering & Progressive Loading Logic
 const filterButtons = document.querySelectorAll(".filter-btn");
 const galleryItems = document.querySelectorAll(".gallery-item");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
 
-filterButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    // Remove active class from all buttons and add to clicked
-    filterButtons.forEach((button) => button.classList.remove("active"));
-    btn.classList.add("active");
+let itemsVisible = 6;
+let currentFilter = "all";
 
-    const filterValue = btn.getAttribute("data-filter");
+function updateGalleryVisibility() {
+  let count = 0;
+  let matches = 0;
 
-    galleryItems.forEach((item) => {
-      if (
-        filterValue === "all" ||
-        item.getAttribute("data-category") === filterValue
-      ) {
+  galleryItems.forEach((item) => {
+    const isMatch =
+      currentFilter === "all" ||
+      item.getAttribute("data-category") === currentFilter;
+
+    if (isMatch) {
+      matches++;
+      if (count < itemsVisible) {
         item.classList.remove("hide");
         item.classList.add("show");
+        count++;
       } else {
         item.classList.remove("show");
         item.classList.add("hide");
       }
-    });
+    } else {
+      item.classList.remove("show");
+      item.classList.add("hide");
+    }
+  });
+
+  // Show/hide Load More button based on matches vs visible
+  if (matches > itemsVisible) {
+    loadMoreBtn.style.display = "inline-block";
+  } else {
+    loadMoreBtn.style.display = "none";
+  }
+}
+
+filterButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    filterButtons.forEach((button) => button.classList.remove("active"));
+    btn.classList.add("active");
+
+    currentFilter = btn.getAttribute("data-filter");
+    itemsVisible = 6; // Reset visible count on filter change
+    updateGalleryVisibility();
   });
 });
+
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => {
+    itemsVisible += 6;
+    updateGalleryVisibility();
+  });
+}
+
+// Initial call
+updateGalleryVisibility();
 
 // Lightbox Logic
 const lightbox = document.getElementById("lightbox");
@@ -256,3 +390,117 @@ document.addEventListener("keydown", (e) => {
     closeLightbox();
   }
 });
+// Hero Mouse Parallax Effect
+const hero = document.querySelector(".hero");
+if (hero) {
+  hero.addEventListener("mousemove", (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+
+    // Calculate mouse position as a percentage from center (-1 to 1)
+    const xPos = (clientX / innerWidth - 0.5) * 2;
+    const yPos = (clientY / innerHeight - 0.5) * 2;
+
+    // Set CSS variables for parallax elements
+    hero.style.setProperty("--mouse-x", xPos.toFixed(3));
+    hero.style.setProperty("--mouse-y", yPos.toFixed(3));
+  });
+
+  // Reset positions when mouse leaves
+  hero.addEventListener("mouseleave", () => {
+    hero.style.setProperty("--mouse-x", "0");
+    hero.style.setProperty("--mouse-y", "0");
+  });
+}
+
+// Elite "Spotlight Reveal" for Special Programs
+// Assuming 'observer' is defined elsewhere for these cards, or needs to be defined here.
+// For now, I'll assume it's meant to be a new observer or a placeholder.
+// If 'observer' is not defined, this block will cause an error.
+// For the purpose of this edit, I'm adding the provided code as is,
+// but noting the potential dependency on an 'observer' variable.
+// If 'observer' is meant to be a new IntersectionObserver, it should be initialized.
+// For example: const observer = new IntersectionObserver(callback, options);
+const specialCards = document.querySelectorAll(".special-card");
+if (specialCards.length > 0) {
+  const specialCardObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-active"); // Assuming a class like this
+          specialCardObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  specialCards.forEach((card) => {
+    specialCardObserver.observe(card);
+  });
+}
+
+// Elite "Curtain Rise" for Footer
+const footerContent = document.querySelector(".footer-content");
+if (footerContent) {
+  const footerChildren = Array.from(footerContent.children); // select direct children elements
+  const footerObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Apply class to all children with staggered transition handled in CSS
+          footerChildren.forEach((child) =>
+            child.classList.add("reveal-active")
+          );
+          footerObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  footerObserver.observe(footerContent);
+}
+
+// Program Card Spotlight Effect
+const programCards = document.querySelectorAll(".program-card");
+programCards.forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    card.style.setProperty("--program-x", `${x}%`);
+    card.style.setProperty("--program-y", `${y}%`);
+  });
+});
+
+// Skill Levels Progress Line ("The Journey")
+const levelsSection = document.querySelector(".skill-levels");
+const levelsProgressBar = document.getElementById("levelsProgressBar");
+
+if (levelsSection && levelsProgressBar) {
+  window.addEventListener("scroll", () => {
+    const sectionTop = levelsSection.offsetTop;
+    const sectionHeight = levelsSection.offsetHeight;
+    const scrollY = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+
+    // Start filling when section enters viewport
+    // Adjustment: start filling a bit earlier
+    const startPoint = sectionTop - windowHeight * 0.7;
+    const endPoint = sectionTop + sectionHeight - windowHeight * 0.3;
+
+    let progress = ((scrollY - startPoint) / (endPoint - startPoint)) * 100;
+    progress = Math.max(0, Math.min(100, progress));
+
+    const isDesktop = window.innerWidth >= 1024;
+    if (isDesktop) {
+      levelsProgressBar.style.width = `${progress}%`;
+      levelsProgressBar.style.height = "100%";
+    } else {
+      levelsProgressBar.style.height = `${progress}%`;
+      levelsProgressBar.style.width = "100%";
+    }
+  });
+}
