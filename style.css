@@ -4014,8 +4014,102 @@ body {
   animation: rotate3d 10s infinite linear;
 }
 
-.cube-box:hover {
-  animation: rotate3d 8s infinite linear;
+.cube-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    var(--primary-color) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(5px);
+  box-shadow: 0 0 50px var(--primary-color), 0 0 100px var(--secondary-color);
+  animation: corePulse 2s infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes corePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.6;
+    box-shadow: 0 0 30px var(--primary-color);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 80px var(--secondary-color);
+  }
+}
+
+/* Face Voltage Effect Styles */
+.face-voltage-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.voltage-path {
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  filter: url("#glow");
+}
+
+/* Active State for Face (on click) */
+.cube-face.face-active {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 40px var(--primary-color) !important;
+}
+
+.cube-face.face-active .face-voltage-svg {
+  opacity: 1;
+}
+
+.cube-face.face-active .voltage-path {
+  animation: faceSpark 1.5s linear infinite;
+}
+
+@keyframes faceSpark {
+  0% {
+    stroke-dashoffset: 600;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Updated face transforms for Click-based Pop */
+.cube-face.front.face-active {
+  transform: translateZ(166px) scale(1.05);
+}
+.cube-face.back.face-active {
+  transform: translateZ(-166px) rotateY(180deg) scale(1.05);
+}
+.cube-face.right.face-active {
+  transform: translateX(166px) rotateY(90deg) scale(1.05);
+}
+.cube-face.left.face-active {
+  transform: translateX(-166px) rotateY(-90deg) scale(1.05);
+}
+.cube-face.top.face-active {
+  transform: translateY(-166px) rotateX(90deg) scale(1.05);
+}
+.cube-face.bottom.face-active {
+  transform: translateY(166px) rotateX(-90deg) scale(1.05);
 }
 
 .cube-face {
@@ -4025,15 +4119,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center; /* Ensures multiline text is centered */
-  font-size: 1.2rem; /* Reduced to fit text better */
-  padding: 1rem; /* Prevent text from touching edges */
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 1rem;
   font-weight: bold;
   backface-visibility: visible;
   border-radius: 12px;
-  background: linear-gradient(145deg, #2a2a2a, #383838);
+  background: linear-gradient(
+    145deg,
+    rgba(42, 42, 42, 0.95),
+    rgba(56, 56, 56, 0.95)
+  );
   border: 2px solid var(--primary-color);
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   color: white;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
@@ -4080,35 +4179,65 @@ body {
   opacity: 1;
 }
 
-/* Face specific transforms */
+/* Face specific transforms with Pop effect */
 .cube-face.front {
-  transform: translateZ(136px); /* 100px * 1.36 */
+  transform: translateZ(136px);
   border-color: var(--primary-color);
+}
+.cube-face.front:hover {
+  transform: translateZ(166px) scale(1.05); /* Slide out 30px */
+  border-color: #ffffff;
+  box-shadow: 0 0 30px var(--primary-color);
 }
 
 .cube-face.back {
   transform: translateZ(-136px) rotateY(180deg);
   border-color: #00bcd4;
 }
+.cube-face.back:hover {
+  transform: translateZ(-166px) rotateY(180deg) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 0 0 30px #00bcd4;
+}
 
 .cube-face.right {
   transform: translateX(136px) rotateY(90deg);
   border-color: #4caf50;
+}
+.cube-face.right:hover {
+  transform: translateX(166px) rotateY(90deg) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 0 0 30px #4caf50;
 }
 
 .cube-face.left {
   transform: translateX(-136px) rotateY(-90deg);
   border-color: #ff4081;
 }
+.cube-face.left:hover {
+  transform: translateX(-166px) rotateY(-90deg) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 0 0 30px #ff4081;
+}
 
 .cube-face.top {
   transform: translateY(-136px) rotateX(90deg);
   border-color: #ffc107;
 }
+.cube-face.top:hover {
+  transform: translateY(-166px) rotateX(90deg) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 0 0 30px #ffc107;
+}
 
 .cube-face.bottom {
   transform: translateY(136px) rotateX(-90deg);
   border-color: #9c27b0;
+}
+.cube-face.bottom:hover {
+  transform: translateY(166px) rotateX(-90deg) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 0 0 30px #9c27b0;
 }
 
 @keyframes rotate3d {

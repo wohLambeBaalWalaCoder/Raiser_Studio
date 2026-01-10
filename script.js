@@ -504,3 +504,18 @@ if (levelsSection && levelsProgressBar) {
     }
   });
 }
+
+// Cube Face Interaction: Voltage Pop
+const cubeFaces = document.querySelectorAll(".cube-face");
+cubeFaces.forEach((face) => {
+  face.addEventListener("click", () => {
+    if (!face.classList.contains("face-active")) {
+      face.classList.add("face-active");
+
+      // Auto-cooling sequence (2 seconds)
+      setTimeout(() => {
+        face.classList.remove("face-active");
+      }, 2000);
+    }
+  });
+});
