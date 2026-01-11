@@ -774,6 +774,7 @@ body {
 .about {
   padding: 3rem 0;
   background: var(--text-light);
+  overflow: hidden; /* Prevent slider overflow */
 }
 
 .about-slider-container {
@@ -786,13 +787,24 @@ body {
 .about-grid {
   display: flex;
   flex-direction: row; /* Always row for slider track */
-  gap: 0;
+  gap: 1.5rem;
   transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
   width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1rem 1.5rem;
+}
+
+.about-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .about-card {
-  flex: 0 0 100%; /* Default mobile view: 1 card per slide */
+  flex: 0 0 85%; /* Mobile peek */
+  scroll-snap-align: center;
   padding: 2rem var(--spacing-md);
   background: var(--light-bg);
   border-radius: 20px;
@@ -905,6 +917,7 @@ body {
 .classes {
   padding: 3rem 0;
   background: var(--light-bg);
+  overflow: hidden; /* Prevent slider overflow */
 }
 
 .classes-grid {
@@ -1366,13 +1379,24 @@ body {
 .classes-grid {
   display: flex;
   flex-direction: row;
-  gap: 0;
+  gap: 1.5rem;
   transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
   width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1rem 1.5rem;
+}
+
+.classes-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .class-card {
-  flex: 0 0 100%; /* Mobile: 1 card per slide */
+  flex: 0 0 85%; /* Mobile: Peek */
+  scroll-snap-align: center;
   padding: 2.5rem 2rem;
   background: var(--light-bg);
   border-radius: 25px;
@@ -1505,7 +1529,11 @@ body {
   font-size: 1.2rem;
 }
 
-/* Dance Styles Section */
+.dance-styles {
+  padding: 4rem 0;
+  overflow: hidden; /* Prevent slider overflow */
+}
+
 .styles-slider-container {
   max-width: 100%;
   overflow: hidden;
@@ -1516,13 +1544,24 @@ body {
 .styles-grid {
   display: flex;
   flex-direction: row;
-  gap: 0;
+  gap: 1.5rem;
   transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
   width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1rem 1.5rem;
+}
+
+.styles-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .style-card {
-  flex: 0 0 100%; /* Mobile: 1 card per slide */
+  flex: 0 0 85%; /* Mobile: Peek */
+  scroll-snap-align: center;
   background: var(--light-bg);
   border-radius: 25px;
   overflow: hidden;
@@ -1635,7 +1674,7 @@ body {
   padding: 4rem 0;
   background: linear-gradient(135deg, #ffffff 0%, #fff6f2 100%);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Prevent slider overflow */
 }
 
 .programs-slider-container {
@@ -1646,12 +1685,26 @@ body {
 .programs-grid {
   display: flex;
   flex-direction: row; /* Default for mobile/slider base */
-  gap: 2rem;
+  gap: 1.5rem;
+  transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1rem 1.5rem;
   position: relative;
   z-index: 1;
 }
 
+.programs-grid::-webkit-scrollbar {
+  display: none;
+}
+
 .program-card {
+  flex: 0 0 85%; /* Mobile: Peek */
+  scroll-snap-align: center;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -2434,15 +2487,17 @@ body {
 /* Pricing Grid Responsive Layout */
 /* Pricing Grid Responsive Layout */
 .pricing-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  padding: 1rem 0.5rem; /* Add padding for scroll/hover space */
-  scroll-snap-type: x mandatory; /* Snap on scroll */
-  overflow-x: auto; /* Enable horizontal scroll */
-  display: flex; /* Flex on mobile for row flow */
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem; /* Space between cards */
+  transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
+  scrollbar-width: none;
+  padding: 1rem 1.5rem; /* Internal padding for cards/shadows */
 }
 .pricing-grid::-webkit-scrollbar {
   display: none; /* Hide scrollbar Chrome/Safari */
@@ -2452,8 +2507,10 @@ body {
   .pricing-grid {
     display: grid; /* Grid on desktop */
     grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; /* Restore gap to prevent overlap */
     align-items: center;
     overflow-x: visible; /* No scroll on desktop */
+    padding: 0; /* Reset mobile padding */
   }
 
   .pricing-card.featured {
@@ -2464,28 +2521,29 @@ body {
 
 /* Pricing Card Styling */
 .pricing-card {
+  flex: 0 0 85%; /* Mobile: Peek at the next card */
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 3rem 2rem;
+  padding: 2rem;
   border-radius: 24px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.5);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 0;
-  height: 100%;
-  min-width: 85%; /* Mobile: Card takes up 85% of screen */
-  scroll-snap-align: center; /* Snap to center */
+  scroll-snap-align: center;
 }
 
 /* Remove margin on last child or desktop if using grid gap */
 @media (min-width: 992px) {
   .pricing-card {
     margin-bottom: 0;
+    flex: none; /* Reset mobile flex-shrink/grow */
+    width: 100%; /* Take full width of grid cell */
     min-width: auto; /* Reset width on desktop */
   }
   /* Hide the dots on desktop */
@@ -3008,6 +3066,14 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.pricing-section {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
 }
 
 .pricing-section.reveal-active .pricing-title {

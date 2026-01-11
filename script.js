@@ -93,6 +93,9 @@ contactForm.addEventListener("submit", async (e) => {
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData.entries());
 
+  // Add your Web3Forms Access Key here
+  data.access_key = "YOUR_ACCESS_KEY_HERE";
+
   try {
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -174,21 +177,82 @@ window.addEventListener("scroll", () => {
 function initSlider(sliderId, dotsId, totalSlides) {
   const slider = document.getElementById(sliderId);
   const dots = document.querySelectorAll(`#${dotsId} .dot`);
+  if (!slider || dots.length === 0) return;
+
   let currentSlide = 0;
   let slideInterval;
 
-  function updateSlider() {
-    const isMobile =
-      window.innerWidth < (sliderId === "classesSlider" ? 1024 : 768);
+  function updateSlider(source = "js") {
+    // Breakpoint mapping
+    const breakpoints = {
+      classesSlider: 1024,
+      stylesSlider: 992,
+      programsSlider: 992,
+      pricingGrid: 992,
+      aboutSlider: 768,
+    };
+    const isMobile = window.innerWidth < (breakpoints[sliderId] || 768);
+
+    // Check if it's currently should be a scroll slider based on CSS
+    const isScrollSlider =
+      window.getComputedStyle(slider).overflowX === "auto" ||
+      window.getComputedStyle(slider).overflowX === "scroll";
+
     if (isMobile) {
-      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-      dots.forEach((dot, index) => {
-        dot.classList.toggle("active", index === currentSlide);
-      });
+      if (isScrollSlider) {
+        if (source === "js") {
+          // Precise scroll to child element to handle gaps and padding
+          const targetChild = slider.children[currentSlide];
+          if (targetChild) {
+            slider.scrollTo({
+              left:
+                targetChild.offsetLeft -
+                (slider.offsetWidth - targetChild.offsetWidth) / 2,
+              behavior: "smooth",
+            });
+          }
+        }
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      } else {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      }
     } else {
       slider.style.transform = "none";
     }
   }
+
+  // Sync dots based on manual scroll/swipe
+  slider.addEventListener("scroll", () => {
+    const isScrollSlider =
+      window.getComputedStyle(slider).overflowX === "auto" ||
+      window.getComputedStyle(slider).overflowX === "scroll";
+
+    if (isScrollSlider) {
+      // Calculate index based on container center
+      const center = slider.scrollLeft + slider.offsetWidth / 2;
+      let closestIndex = 0;
+      let minDistance = Infinity;
+
+      Array.from(slider.children).forEach((child, index) => {
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        const distance = Math.abs(center - childCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== currentSlide && closestIndex < totalSlides) {
+        currentSlide = closestIndex;
+        updateSlider("scroll");
+      }
+    }
+  });
 
   function nextSlide() {
     currentSlide = (currentSlide + 1) % totalSlides;
@@ -208,7 +272,7 @@ function initSlider(sliderId, dotsId, totalSlides) {
     });
   });
 
-  window.addEventListener("resize", updateSlider);
+  window.addEventListener("resize", () => updateSlider());
   startSlider();
   updateSlider();
 }
@@ -218,6 +282,7 @@ initSlider("aboutSlider", "sliderDots", 3);
 initSlider("classesSlider", "classesDots", 4);
 initSlider("stylesSlider", "stylesDots", 4);
 initSlider("programsSlider", "programsDots", 3);
+initSlider("pricingGrid", "pricingDots", 3);
 
 const levelCards = document.querySelectorAll(".level-card");
 
@@ -519,3 +584,6 @@ cubeFaces.forEach((face) => {
     }
   });
 });
+
+// Basic Security Deterrent: Disable Right-Click
+document.addEventListener("contextmenu", (event) => event.preventDefault());
