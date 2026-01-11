@@ -611,3 +611,115 @@ cubeFaces.forEach((face) => {
 
 // Basic Security Deterrent: Disable Right-Click
 document.addEventListener("contextmenu", (event) => event.preventDefault());
+
+// Premium Slider Synchronization with Cinematic Slow Drift & Dynamic Dots
+function initSlider(sliderId, dotsId, driftSpeed = 0) {
+  const slider = document.getElementById(sliderId);
+  const dotsContainer = document.getElementById(dotsId);
+  if (!slider || !dotsContainer) return;
+
+  const cards = slider.children;
+  if (cards.length === 0) return;
+
+  // Clear existing dots and dynamically generate new ones
+  dotsContainer.innerHTML = "";
+  for (let i = 0; i < cards.length; i++) {
+    const dot = document.createElement("span");
+    dot.className = i === 0 ? "dot active" : "dot";
+    dot.setAttribute("data-index", i);
+    dotsContainer.appendChild(dot);
+  }
+
+  const dots = dotsContainer.querySelectorAll(".dot");
+  let animationId;
+  let isInteracting = false;
+  let currentScroll = slider.scrollLeft;
+
+  const updateDots = () => {
+    const scrollLeft = slider.scrollLeft;
+    let activeIndex = 0;
+    if (cards.length > 1) {
+      const cardWidthWithGap = cards[1].offsetLeft - cards[0].offsetLeft;
+      activeIndex = Math.round(scrollLeft / cardWidthWithGap);
+    }
+
+    // Safety check for activeIndex
+    activeIndex = Math.max(0, Math.min(activeIndex, dots.length - 1));
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === activeIndex);
+    });
+    Array.from(cards).forEach((card, index) => {
+      card.classList.toggle("active-slide", index === activeIndex);
+    });
+  };
+
+  const drift = () => {
+    if (isInteracting) return;
+
+    currentScroll += driftSpeed;
+    const maxScroll = slider.scrollWidth - slider.offsetWidth;
+
+    if (currentScroll >= maxScroll) {
+      currentScroll = 0;
+    }
+
+    slider.scrollLeft = currentScroll;
+    animationId = requestAnimationFrame(drift);
+  };
+
+  const startDrift = () => {
+    if (driftSpeed <= 0) return;
+    isInteracting = false;
+    slider.style.scrollSnapType = "none";
+    currentScroll = slider.scrollLeft;
+    drift();
+  };
+
+  const stopDrift = () => {
+    isInteracting = true;
+    cancelAnimationFrame(animationId);
+    slider.style.scrollSnapType = "x mandatory";
+  };
+
+  slider.addEventListener("scroll", updateDots);
+
+  // Interaction detection
+  slider.addEventListener("touchstart", stopDrift, { passive: true });
+  slider.addEventListener("mousedown", stopDrift);
+
+  const handleInteractionEnd = () => {
+    setTimeout(() => {
+      if (driftSpeed > 0) startDrift();
+    }, 3000);
+  };
+
+  slider.addEventListener("touchend", handleInteractionEnd, { passive: true });
+  slider.addEventListener("mouseup", handleInteractionEnd);
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      stopDrift();
+      const index = parseInt(dot.getAttribute("data-index"));
+      const cardWidthWithGap =
+        cards.length > 1
+          ? cards[1].offsetLeft - cards[0].offsetLeft
+          : slider.offsetWidth;
+      slider.scrollTo({
+        left: index * cardWidthWithGap,
+        behavior: "smooth",
+      });
+      handleInteractionEnd();
+    });
+  });
+
+  updateDots();
+  if (driftSpeed > 0) startDrift();
+}
+
+// Initialize all premium sliders (Reduced speeds for more graceful motion)
+// driftSpeed is pixels per frame (approx 0.5-1.0 for slow, smooth drift)
+initSlider("stylesSlider", "stylesDots", 0.3);
+initSlider("programsSlider", "programsDots", 0.35);
+initSlider("specialSlider", "specialDots", 0.4);
+initSlider("rentSlider", "rentDots", 0.5);
