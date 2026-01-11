@@ -198,115 +198,14 @@ document
 // Simplified Scroll Spy already handled in updateNavigation
 
 // Reusable Slider Function
-function initSlider(sliderId, dotsId, totalSlides) {
-  const slider = document.getElementById(sliderId);
-  const dots = document.querySelectorAll(`#${dotsId} .dot`);
-  if (!slider || dots.length === 0) return;
-
-  let currentSlide = 0;
-  let slideInterval;
-
-  function updateSlider(source = "js") {
-    // Breakpoint mapping
-    const breakpoints = {
-      classesSlider: 1024,
-      stylesSlider: 992,
-      programsSlider: 992,
-      pricingGrid: 992,
-      aboutSlider: 768,
-    };
-    const isMobile = window.innerWidth < (breakpoints[sliderId] || 768);
-
-    // Check if it's currently should be a scroll slider based on CSS
-    const isScrollSlider =
-      window.getComputedStyle(slider).overflowX === "auto" ||
-      window.getComputedStyle(slider).overflowX === "scroll";
-
-    if (isMobile) {
-      if (isScrollSlider) {
-        if (source === "js") {
-          // Precise scroll to child element to handle gaps and padding
-          const targetChild = slider.children[currentSlide];
-          if (targetChild) {
-            slider.scrollTo({
-              left:
-                targetChild.offsetLeft -
-                (slider.offsetWidth - targetChild.offsetWidth) / 2,
-              behavior: "smooth",
-            });
-          }
-        }
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("active", index === currentSlide);
-        });
-      } else {
-        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("active", index === currentSlide);
-        });
-      }
-    } else {
-      slider.style.transform = "none";
-    }
-  }
-
-  // Sync dots based on manual scroll/swipe
-  slider.addEventListener("scroll", () => {
-    const isScrollSlider =
-      window.getComputedStyle(slider).overflowX === "auto" ||
-      window.getComputedStyle(slider).overflowX === "scroll";
-
-    if (isScrollSlider) {
-      // Calculate index based on container center
-      const center = slider.scrollLeft + slider.offsetWidth / 2;
-      let closestIndex = 0;
-      let minDistance = Infinity;
-
-      Array.from(slider.children).forEach((child, index) => {
-        const childCenter = child.offsetLeft + child.offsetWidth / 2;
-        const distance = Math.abs(center - childCenter);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIndex = index;
-        }
-      });
-
-      if (closestIndex !== currentSlide && closestIndex < totalSlides) {
-        currentSlide = closestIndex;
-        updateSlider("scroll");
-      }
-    }
-  });
-
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateSlider();
-  }
-
-  function startSlider() {
-    if (slideInterval) clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-
-  dots.forEach((dot) => {
-    dot.addEventListener("click", () => {
-      currentSlide = parseInt(dot.getAttribute("data-index"));
-      updateSlider();
-      startSlider();
-    });
-  });
-
-  window.addEventListener("resize", () => updateSlider());
-  startSlider();
-  updateSlider();
-}
+// Old initSlider function removed to prevent conflicts
 
 // Initialize Sliders
-initSlider("aboutSlider", "sliderDots", 3);
-initSlider("classesSlider", "classesDots", 4);
-initSlider("stylesSlider", "stylesDots", 4);
-initSlider("programsSlider", "programsDots", 3);
-initSlider("pricingGrid", "pricingDots", 3);
+initSlider("aboutSlider", "sliderDots", 3, false); // Auto-only, no manual interaction
+initSlider("classesSlider", "classesDots", 0); // Manual sliding only
+initSlider("stylesSlider", "stylesDots", 0); // Manual sliding only
+initSlider("programsSlider", "programsDots", 0); // Manual sliding only
+initSlider("pricingGrid", "pricingDots", 0);
 
 const levelCards = document.querySelectorAll(".level-card");
 
@@ -613,27 +512,41 @@ cubeFaces.forEach((face) => {
 document.addEventListener("contextmenu", (event) => event.preventDefault());
 
 // Premium Slider Synchronization with Cinematic Slow Drift & Dynamic Dots
-function initSlider(sliderId, dotsId, driftSpeed = 0) {
+// Premium Slider Synchronization with Cinematic Slow Drift & Dynamic Dots
+// Premium Slider Synchronization with Cinematic Slow Drift & Dynamic Dots
+function initSlider(sliderId, dotsId, driftSpeed = 0, allowManual = true) {
   const slider = document.getElementById(sliderId);
-  const dotsContainer = document.getElementById(dotsId);
-  if (!slider || !dotsContainer) return;
+  const dotsContainer = dotsId ? document.getElementById(dotsId) : null;
+
+  // Only return if slider is missing. Dots are now optional.
+  if (!slider) return;
 
   const cards = slider.children;
   if (cards.length === 0) return;
 
-  // Clear existing dots and dynamically generate new ones
-  dotsContainer.innerHTML = "";
-  for (let i = 0; i < cards.length; i++) {
-    const dot = document.createElement("span");
-    dot.className = i === 0 ? "dot active" : "dot";
-    dot.setAttribute("data-index", i);
-    dotsContainer.appendChild(dot);
+  // Clear existing dots and dynamically generate new ones IF container exists
+  if (dotsContainer) {
+    dotsContainer.innerHTML = "";
+    for (let i = 0; i < cards.length; i++) {
+      const dot = document.createElement("span");
+      dot.className = i === 0 ? "dot active" : "dot";
+      dot.setAttribute("data-index", i);
+      dotsContainer.appendChild(dot);
+    }
   }
 
-  const dots = dotsContainer.querySelectorAll(".dot");
+  const dots = dotsContainer ? dotsContainer.querySelectorAll(".dot") : [];
   let animationId;
   let isInteracting = false;
   let currentScroll = slider.scrollLeft;
+  let isPointerDown = false;
+
+  // Configuration for manual vs auto-only
+  if (!allowManual) {
+    // slider.style.overflowX = "hidden"; // Removed to ensure JS scrolling works
+    slider.style.cursor = "default";
+    slider.style.touchAction = "none"; // Disable localized touch actions
+  }
 
   const updateDots = () => {
     const scrollLeft = slider.scrollLeft;
@@ -644,82 +557,134 @@ function initSlider(sliderId, dotsId, driftSpeed = 0) {
     }
 
     // Safety check for activeIndex
-    activeIndex = Math.max(0, Math.min(activeIndex, dots.length - 1));
+    // If dots exist, cap index to length. Otherwise just prevent negative.
+    const maxIndex = dots.length > 0 ? dots.length - 1 : cards.length - 1;
+    activeIndex = Math.max(0, Math.min(activeIndex, maxIndex));
 
-    dots.forEach((dot, index) => {
-      dot.classList.toggle("active", index === activeIndex);
-    });
+    if (dots.length > 0) {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === activeIndex);
+      });
+    }
     Array.from(cards).forEach((card, index) => {
       card.classList.toggle("active-slide", index === activeIndex);
     });
   };
 
   const drift = () => {
-    if (isInteracting) return;
+    if (isInteracting || isPointerDown) return;
 
-    currentScroll += driftSpeed;
-    const maxScroll = slider.scrollWidth - slider.offsetWidth;
-
-    if (currentScroll >= maxScroll) {
-      currentScroll = 0;
+    // Calculate which card to go to next
+    let currentIndex = 0;
+    if (cards.length > 1) {
+      const cardWidthWithGap = cards[1].offsetLeft - cards[0].offsetLeft;
+      currentIndex = Math.round(slider.scrollLeft / cardWidthWithGap);
     }
 
-    slider.scrollLeft = currentScroll;
-    animationId = requestAnimationFrame(drift);
+    // Move to next card (loop back to first if at end)
+    const nextIndex = (currentIndex + 1) % cards.length;
+    const targetCard = cards[nextIndex];
+
+    if (targetCard) {
+      slider.scrollTo({
+        left:
+          targetCard.offsetLeft -
+          (slider.offsetWidth - targetCard.offsetWidth) / 2,
+        behavior: "smooth",
+      });
+    }
   };
 
   const startDrift = () => {
     if (driftSpeed <= 0) return;
     isInteracting = false;
-    slider.style.scrollSnapType = "none";
-    currentScroll = slider.scrollLeft;
-    drift();
+
+    // Use interval for card-by-card sliding (4 seconds between slides)
+    if (animationId) clearInterval(animationId);
+    animationId = setInterval(drift, 4000);
+
+    // Also run once immediately after a short delay
+    setTimeout(drift, 100);
   };
 
   const stopDrift = () => {
     isInteracting = true;
-    cancelAnimationFrame(animationId);
-    slider.style.scrollSnapType = "x mandatory";
+    if (animationId) clearInterval(animationId);
+    animationId = null;
   };
 
   slider.addEventListener("scroll", updateDots);
 
-  // Interaction detection
-  slider.addEventListener("touchstart", stopDrift, { passive: true });
-  slider.addEventListener("mousedown", stopDrift);
-
-  const handleInteractionEnd = () => {
-    setTimeout(() => {
-      if (driftSpeed > 0) startDrift();
-    }, 3000);
-  };
-
-  slider.addEventListener("touchend", handleInteractionEnd, { passive: true });
-  slider.addEventListener("mouseup", handleInteractionEnd);
-
-  dots.forEach((dot) => {
-    dot.addEventListener("click", () => {
+  // Only attach interaction listeners if manual control is allowed
+  if (allowManual) {
+    // Enhanced interaction detection for all pointer types (touch, mouse, pen)
+    const handlePointerDown = () => {
+      isPointerDown = true;
       stopDrift();
-      const index = parseInt(dot.getAttribute("data-index"));
-      const cardWidthWithGap =
-        cards.length > 1
-          ? cards[1].offsetLeft - cards[0].offsetLeft
-          : slider.offsetWidth;
-      slider.scrollTo({
-        left: index * cardWidthWithGap,
-        behavior: "smooth",
-      });
-      handleInteractionEnd();
+      slider.style.cursor = "grabbing";
+    };
+
+    const handlePointerUp = () => {
+      isPointerDown = false;
+      slider.style.cursor = "grab";
+      setTimeout(() => {
+        if (driftSpeed > 0 && !isPointerDown) startDrift();
+      }, 3000);
+    };
+
+    // Use pointer events for better touch support
+    slider.addEventListener("pointerdown", handlePointerDown);
+    slider.addEventListener("pointerup", handlePointerUp);
+    slider.addEventListener("pointercancel", handlePointerUp);
+    slider.addEventListener("pointerleave", handlePointerUp);
+
+    // Fallback for older touch event support
+    slider.addEventListener("touchstart", stopDrift, { passive: true });
+    slider.addEventListener(
+      "touchend",
+      () => {
+        setTimeout(() => {
+          if (driftSpeed > 0) startDrift();
+        }, 3000);
+      },
+      { passive: true }
+    );
+
+    // Mouse support
+    slider.addEventListener("mousedown", handlePointerDown);
+    slider.addEventListener("mouseup", handlePointerUp);
+    slider.addEventListener("mouseleave", () => {
+      if (isPointerDown) {
+        handlePointerUp();
+      }
     });
-  });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        stopDrift();
+        const index = parseInt(dot.getAttribute("data-index"));
+        const cardWidthWithGap =
+          cards.length > 1
+            ? cards[1].offsetLeft - cards[0].offsetLeft
+            : slider.offsetWidth;
+        slider.scrollTo({
+          left: index * cardWidthWithGap,
+          behavior: "smooth",
+        });
+        setTimeout(() => {
+          if (driftSpeed > 0) startDrift();
+        }, 3000);
+      });
+    });
+  }
 
   updateDots();
   if (driftSpeed > 0) startDrift();
 }
 
-// Initialize all premium sliders (Reduced speeds for more graceful motion)
-// driftSpeed is pixels per frame (approx 0.5-1.0 for slow, smooth drift)
-initSlider("stylesSlider", "stylesDots", 0.3);
-initSlider("programsSlider", "programsDots", 0.35);
-initSlider("specialSlider", "specialDots", 0.4);
-initSlider("rentSlider", "rentDots", 0.5);
+// Initialize all premium sliders - Manual sliding only (no auto-drift)
+// driftSpeed is set to 0 to disable automatic sliding
+initSlider("stylesSlider", "stylesDots", 0); // Manual sliding only
+initSlider("programsSlider", "programsDots", 0); // Manual sliding only
+initSlider("specialSlider", "specialDots", 0); // Manual sliding only
+initSlider("rentSlider", "rentDots", 0); // Manual sliding only
