@@ -1,25 +1,61 @@
 // Mobile Menu Toggle
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
 const navMenu = document.getElementById("navMenu");
+const mobileDrawer = document.getElementById("mobileDrawer");
+const navOverlay = document.getElementById("navOverlay");
 const navLinks = document.querySelectorAll(".nav-link");
+const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
 
 mobileMenuBtn.addEventListener("click", () => {
-  navMenu.classList.toggle("active");
+  mobileDrawer.classList.toggle("active");
   mobileMenuBtn.classList.toggle("active");
+  if (navOverlay) navOverlay.classList.toggle("active");
 });
 
 // Close mobile menu when clicking on a link
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
-    navMenu.classList.remove("active");
+    mobileDrawer.classList.remove("active");
     mobileMenuBtn.classList.remove("active");
+    if (navOverlay) navOverlay.classList.remove("active");
   });
 });
+
+mobileNavLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    mobileDrawer.classList.remove("active");
+    mobileMenuBtn.classList.remove("active");
+    if (navOverlay) navOverlay.classList.remove("active");
+  });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (
+    mobileDrawer.classList.contains("active") &&
+    !mobileDrawer.contains(e.target) &&
+    !mobileMenuBtn.contains(e.target)
+  ) {
+    mobileDrawer.classList.remove("active");
+    mobileMenuBtn.classList.remove("active");
+    if (navOverlay) navOverlay.classList.remove("active");
+  }
+});
+
+// Close mobile menu when clicking the overlay specifically
+if (navOverlay) {
+  navOverlay.addEventListener("click", () => {
+    mobileDrawer.classList.remove("active");
+    mobileMenuBtn.classList.remove("active");
+    navOverlay.classList.remove("active");
+  });
+}
 
 // Navbar scroll and Scroll Spy effect
 const navbar = document.getElementById("navbar");
 const sections = document.querySelectorAll("section[id]");
 let isScrolling = false;
+let currentId = "";
 
 function updateNavigation() {
   const scrollY = window.pageYOffset;
@@ -41,9 +77,16 @@ function updateNavigation() {
       document
         .querySelector(`.nav-menu a[href*=${sectionId}]`)
         ?.classList.add("active");
+      document
+        .querySelector(`.mobile-drawer a[href*=${sectionId}]`)
+        ?.classList.add("active");
+      currentId = sectionId;
     } else {
       document
         .querySelector(`.nav-menu a[href*=${sectionId}]`)
+        ?.classList.remove("active");
+      document
+        .querySelector(`.mobile-drawer a[href*=${sectionId}]`)
         ?.classList.remove("active");
     }
   });
@@ -152,26 +195,7 @@ document
     observer.observe(el);
   });
 
-// Add active state to nav links based on scroll position
-window.addEventListener("scroll", () => {
-  let current = "";
-  const sections = document.querySelectorAll("section[id]");
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    if (window.pageYOffset >= sectionTop - 100) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${current}`) {
-      link.classList.add("active");
-    }
-  });
-});
+// Simplified Scroll Spy already handled in updateNavigation
 
 // Reusable Slider Function
 function initSlider(sliderId, dotsId, totalSlides) {
